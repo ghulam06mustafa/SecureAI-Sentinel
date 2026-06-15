@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Logs | SecureAI Sentinel</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <span>🛡️</span>
+            <span>SecureAI Sentinel</span>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="dashboard.html">📊 Dashboard</a>
+            <a href="upload-logs.html" class="active">📤 Upload Logs</a>
+            <a href="threats.html">🚨 Threats</a>
+            <a href="reports.html">📑 Reports</a>
+            <a href="knowledge-base.html">🧠 Knowledge Base</a>
+            <a href="settings.html">⚙️ Settings</a>
+            <a href="index.html">🌐 Website</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <div class="topbar">
+            <div>
+                <h1>Upload & Analyze Logs</h1>
+                <p>Upload CSV logs, then run AI-ready threat detection.</p>
+            </div>
+
+            <div class="user-box">
+                <div class="user-info">
+                    <strong id="userName">Admin</strong>
+                    <span id="companyName">Organization</span>
+                </div>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+
+        <section class="panel">
+            <div class="upload-box">
+                <h3>Select Log File</h3>
+                <p>Allowed formats: .csv, .log, .txt. Threat analysis currently supports CSV.</p>
+
+                <input type="file" id="logFile" accept=".csv,.log,.txt">
+                <br><br>
+
+                <button class="btn" id="uploadBtn">Upload Logs</button>
+
+                <div class="upload-result" id="uploadResult">
+                    File uploaded successfully.
+                </div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-header">
+                <h3>Uploaded Log Files</h3>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>File Name</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Threats Found</th>
+                            <th>Uploaded At</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="uploadTable">
+                        <tr>
+                            <td colspan="6">Loading uploaded logs...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<script src="assets/js/app.js"></script>
+<script src="assets/js/upload.js"></script>
+</body>
+</html>

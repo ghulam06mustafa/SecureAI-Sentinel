@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | SecureAI Sentinel</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+
+    <style>
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: #ffffff;
+            padding: 22px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(15,23,42,0.06);
+            border: 1px solid #e2e8f0;
+        }
+
+        .stat-card span {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .stat-card h2 {
+            font-size: 32px;
+            margin: 8px 0;
+            color: #172033;
+        }
+
+        .stat-card p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 22px;
+            margin-bottom: 24px;
+        }
+
+        .severity-item {
+            display: grid;
+            grid-template-columns: 100px 1fr 50px;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .bar-bg {
+            background: #e2e8f0;
+            height: 10px;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 20px;
+        }
+
+        .critical-bar { background: #dc2626; }
+        .high-bar { background: #f97316; }
+        .medium-bar { background: #eab308; }
+        .low-bar { background: #22c55e; }
+
+        @media (max-width: 950px) {
+            .stats-grid,
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <span>🛡️</span>
+            <span>SecureAI Sentinel</span>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="dashboard.html" class="active">📊 Dashboard</a>
+            <a href="upload-logs.html">📤 Upload Logs</a>
+            <a href="threats.html">🚨 Threats</a>
+            <a href="reports.html">📑 Reports</a>
+            <a href="knowledge-base.html">🧠 Knowledge Base</a>
+            <a href="settings.html">⚙️ Settings</a>
+            <a href="index.html">🌐 Website</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <div class="topbar">
+            <div>
+                <h1>Security Intelligence Dashboard</h1>
+                <p>Live threat summary from uploaded security logs.</p>
+            </div>
+
+            <div class="user-box">
+                <div class="user-info">
+                    <strong id="userName">Admin</strong>
+                    <span id="companyName">Organization</span>
+                </div>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <span>Total Logs Uploaded</span>
+                <h2 id="totalLogs">0</h2>
+                <p>From database</p>
+            </div>
+
+            <div class="stat-card">
+                <span>Total Threats</span>
+                <h2 id="totalThreats">0</h2>
+                <p>Detected incidents</p>
+            </div>
+
+            <div class="stat-card">
+                <span>Critical Threats</span>
+                <h2 id="criticalThreats">0</h2>
+                <p>Needs immediate review</p>
+            </div>
+
+            <div class="stat-card">
+                <span>High Threats</span>
+                <h2 id="highThreats">0</h2>
+                <p>High priority issues</p>
+            </div>
+        </section>
+
+        <section class="dashboard-grid">
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>Severity Overview</h3>
+                    <a href="threats.html" class="action-link">View Threats</a>
+                </div>
+
+                <div class="severity-item">
+                    <span>Critical</span>
+                    <div class="bar-bg">
+                        <div class="bar-fill critical-bar" id="criticalBar" style="width: 0%;"></div>
+                    </div>
+                    <strong id="criticalCount">0</strong>
+                </div>
+
+                <div class="severity-item">
+                    <span>High</span>
+                    <div class="bar-bg">
+                        <div class="bar-fill high-bar" id="highBar" style="width: 0%;"></div>
+                    </div>
+                    <strong id="highCount">0</strong>
+                </div>
+
+                <div class="severity-item">
+                    <span>Medium</span>
+                    <div class="bar-bg">
+                        <div class="bar-fill medium-bar" id="mediumBar" style="width: 0%;"></div>
+                    </div>
+                    <strong id="mediumCount">0</strong>
+                </div>
+
+                <div class="severity-item">
+                    <span>Low</span>
+                    <div class="bar-bg">
+                        <div class="bar-fill low-bar" id="lowBar" style="width: 0%;"></div>
+                    </div>
+                    <strong id="lowCount">0</strong>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>Top Risky IPs</h3>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Source IP</th>
+                                <th>Threats</th>
+                                <th>Max Risk</th>
+                            </tr>
+                        </thead>
+                        <tbody id="topIpTable">
+                            <tr>
+                                <td colspan="3">Loading...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="panel">
+            <div class="panel-header">
+                <h3>Recent Threat Incidents</h3>
+                <a href="upload-logs.html" class="action-link">Upload Logs</a>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Threat Type</th>
+                            <th>Source IP</th>
+                            <th>Risk Score</th>
+                            <th>Severity</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentThreatTable">
+                        <tr>
+                            <td colspan="5">Loading recent threats...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+</div>
+
+<script src="assets/js/dashboard.js"></script>
+</body>
+</html>

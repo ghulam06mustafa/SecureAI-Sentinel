@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings | SecureAI Sentinel</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+
+    <style>
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+            margin-bottom: 24px;
+        }
+
+        .settings-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(15,23,42,0.06);
+        }
+
+        .settings-card h3 {
+            color: #0f172a;
+            margin-bottom: 14px;
+        }
+
+        .settings-card p {
+            color: #475569;
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 14px 0;
+        }
+
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+
+        .setting-row strong {
+            color: #0f172a;
+        }
+
+        .setting-row span {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .danger-card {
+            border: 1px solid #fecaca;
+            background: #fff7f7;
+        }
+
+        .danger-card h3 {
+            color: #991b1b;
+        }
+
+        .danger-btn {
+            background: #dc2626;
+            border-color: #dc2626;
+        }
+
+        @media (max-width: 950px) {
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <span>🛡️</span>
+            <span>SecureAI Sentinel</span>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="dashboard.html">📊 Dashboard</a>
+            <a href="upload-logs.html">📤 Upload Logs</a>
+            <a href="threats.html">🚨 Threats</a>
+            <a href="reports.html">📑 Reports</a>
+            <a href="knowledge-base.html">🧠 Knowledge Base</a>
+            <a href="settings.html" class="active">⚙️ Settings</a>
+            <a href="index.html">🌐 Website</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <div class="topbar">
+            <div>
+                <h1>System Settings</h1>
+                <p>Manage account, security status, and SecureAI Sentinel configuration.</p>
+            </div>
+
+            <div class="user-box">
+                <div class="user-info">
+                    <strong id="userName">Admin</strong>
+                    <span id="companyName">Organization</span>
+                </div>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+
+        <section class="settings-grid">
+
+            <div class="settings-card">
+                <h3>Account Information</h3>
+
+                <div class="setting-row">
+                    <div>
+                        <strong>Full Name</strong><br>
+                        <span id="settingsFullName">Loading...</span>
+                    </div>
+                </div>
+
+                <div class="setting-row">
+                    <div>
+                        <strong>Email</strong><br>
+                        <span id="settingsEmail">Loading...</span>
+                    </div>
+                </div>
+
+                <div class="setting-row">
+                    <div>
+                        <strong>Role</strong><br>
+                        <span id="settingsRole">Loading...</span>
+                    </div>
+                </div>
+
+                <div class="setting-row">
+                    <div>
+                        <strong>Organization ID</strong><br>
+                        <span id="settingsOrg">Loading...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-card">
+                <h3>Backend Status</h3>
+
+                <div class="setting-row">
+                    <div>
+                        <strong>API Server</strong><br>
+                        <span id="apiStatus">Checking...</span>
+                    </div>
+                </div>
+
+                <div class="setting-row">
+                    <div>
+                        <strong>Auth Token</strong><br>
+                        <span id="tokenStatus">Checking...</span>
+                    </div>
+                </div>
+
+                <div class="setting-row">
+                    <div>
+                        <strong>Current API URL</strong><br>
+                        <span>http://127.0.0.1:8000</span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="settings-grid">
+
+            <div class="settings-card">
+                <h3>Security Configuration</h3>
+
+                <div class="setting-row">
+                    <strong>Password Hashing</strong>
+                    <span class="badge badge-info">Enabled</span>
+                </div>
+
+                <div class="setting-row">
+                    <strong>JWT Authentication</strong>
+                    <span class="badge badge-info">Enabled</span>
+                </div>
+
+                <div class="setting-row">
+                    <strong>Protected Pages</strong>
+                    <span class="badge badge-info">Enabled</span>
+                </div>
+
+                <div class="setting-row">
+                    <strong>Organization Isolation</strong>
+                    <span class="badge badge-info">Enabled</span>
+                </div>
+
+                <div class="setting-row">
+                    <strong>Rate Limiting</strong>
+                    <span class="badge badge-medium">Pending</span>
+                </div>
+
+                <div class="setting-row">
+                    <strong>Audit Logs</strong>
+                    <span class="badge badge-medium">Pending</span>
+                </div>
+            </div>
+
+            <div class="settings-card">
+                <h3>AI Configuration</h3>
+
+                <div class="setting-row">
+                    <strong>AI Threat Explanation</strong>
+                    <span class="badge badge-medium">Next Phase</span>
+                </div>
+
+                <div class="setting-row">
+                    <strong>RAG Knowledge Engine</strong>
+                    <span class="badge badge-medium">Planned</span>
+                </div>
+
+                <div class="setting-row">
+                    <strong>Vector Database</strong>
+                    <span class="badge badge-medium">Planned</span>
+                </div>
+
+                <div class="setting-row">
+                    <strong>LLM Provider</strong>
+                    <span>Ollama / Gemini / OpenAI</span>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="settings-card danger-card">
+            <h3>Danger Zone</h3>
+            <p>
+                This section is for account/session actions. Database delete/reset options should only be added after role-based admin permissions.
+            </p>
+
+            <button class="btn danger-btn" id="settingsLogoutBtn">Logout Current Session</button>
+        </section>
+
+    </main>
+
+</div>
+
+<script src="assets/js/app.js"></script>
+<script src="assets/js/settings.js"></script>
+</body>
+</html>

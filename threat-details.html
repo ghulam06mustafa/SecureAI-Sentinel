@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Threat Details | SecureAI Sentinel</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+
+    <style>
+        .ai-section-box {
+            background: #f8fafc;
+            border-left: 5px solid #2563eb;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            line-height: 1.7;
+            color: #334155;
+        }
+
+        .ai-section-box h4 {
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .ai-empty-box {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 18px;
+            border-radius: 12px;
+            color: #7c2d12;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <span>🛡️</span>
+            <span>SecureAI Sentinel</span>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="dashboard.html">📊 Dashboard</a>
+            <a href="upload-logs.html">📤 Upload Logs</a>
+            <a href="threats.html" class="active">🚨 Threats</a>
+            <a href="reports.html">📑 Reports</a>
+            <a href="knowledge-base.html">🧠 Knowledge Base</a>
+            <a href="settings.html">⚙️ Settings</a>
+            <a href="index.html">🌐 Website</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="topbar">
+            <div>
+                <h1>Threat Details</h1>
+                <p>Detected threat explanation, risk score, and AI response analysis.</p>
+            </div>
+
+            <div class="user-box">
+                <div class="user-info">
+                    <strong id="userName">Admin</strong>
+                    <span id="companyName">Organization</span>
+                </div>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+
+        <section class="detail-grid">
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>Incident Summary</h3>
+                </div>
+
+                <p><strong>Threat Type:</strong> <span id="threatType">Loading...</span></p>
+                <br>
+                <p><strong>Source IP:</strong> <span id="threatIp">Loading...</span></p>
+                <br>
+                <p><strong>Username:</strong> <span id="threatUser">Loading...</span></p>
+                <br>
+                <p><strong>Risk Score:</strong> <span id="riskScore">Loading...</span>/100</p>
+                <br>
+                <p><strong>Severity:</strong> <span id="severity">Loading...</span></p>
+                <br>
+                <p><strong>Status:</strong> <span id="status">Loading...</span></p>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>MITRE / Security Mapping</h3>
+                </div>
+
+                <p><strong>Tactic:</strong> <span id="mitreTactic">Loading...</span></p>
+                <br>
+                <p><strong>Technique:</strong> <span id="mitreTechnique">Loading...</span></p>
+                <br>
+                <p><strong>Evidence Count:</strong> <span id="evidenceCount">Loading...</span></p>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-header">
+                <h3>Rule-Based Threat Description</h3>
+            </div>
+
+            <div class="ai-box" id="descriptionBox">
+                Loading threat description...
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-header">
+                <h3>Rule-Based Recommended Actions</h3>
+            </div>
+
+            <div class="warning-box" id="recommendationBox">
+                Loading recommendation...
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-header">
+                <h3>AI Threat Explanation</h3>
+                <button class="btn btn-small" id="generateAiBtn">Generate AI Explanation</button>
+            </div>
+
+            <div id="aiAnalysisBox" class="ai-empty-box">
+                AI analysis has not been generated yet.
+            </div>
+        </section>
+
+        <section class="panel">
+            <button class="btn" onclick="window.location.href='threats.html'">Back to Threats</button>
+        </section>
+    </main>
+</div>
+
+<script src="assets/js/app.js"></script>
+
+<script>
+const API_BASE_URL_DETAIL = "http://127.0.0.1:8000";
+const detailToken = localStorage.getItem("secureai_token");
+const threatId = localStorage.getItem("selected_threat_id");
+
+const generateAiBtn = document.getElementById("generateAiBtn");
+const aiAnalysisBox = document.getElementById("aiAnalysisBox");
+
+if (!detailToken) {
+    window.location.replace("login.html");
+}
+
+if (!threatId) {
+    alert("No threat selected.");
+    window.location.href = "threats.html";
+}
+
+async function loadThreatDetail() {
+    try {
+        const response = await fetch(`${API_BASE_URL_DETAIL}/threats/${threatId}`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${detailToken}`
+            }
+        });
+
+        if (!response.ok) {
+            alert("Threat not found.");
+            window.location.href = "threats.html";
+            return;
+        }
+
+        const threat = await response.json();
+
+        document.getElementById("threatType").textContent = threat.threat_type;
+        document.getElementById("threatIp").textContent = threat.source_ip || "-";
+        document.getElementById("threatUser").textContent = threat.username || "-";
+        document.getElementById("riskScore").textContent = threat.risk_score;
+        document.getElementById("severity").textContent = threat.severity;
+        document.getElementById("status").textContent = threat.status;
+
+        document.getElementById("mitreTactic").textContent = threat.mitre_tactic || "-";
+        document.getElementById("mitreTechnique").textContent = threat.mitre_technique || "-";
+        document.getElementById("evidenceCount").textContent = threat.evidence_count;
+
+        document.getElementById("descriptionBox").textContent = threat.description;
+        document.getElementById("recommendationBox").textContent = threat.recommendation;
+
+    } catch (error) {
+        alert("Backend connection failed.");
+        window.location.href = "threats.html";
+    }
+}
+
+async function loadExistingAIAnalysis() {
+    try {
+        const response = await fetch(`${API_BASE_URL_DETAIL}/ai/threat-analysis/${threatId}`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${detailToken}`
+            }
+        });
+
+        if (!response.ok) {
+            aiAnalysisBox.className = "ai-empty-box";
+            aiAnalysisBox.innerHTML = "AI analysis has not been generated yet.";
+            return;
+        }
+
+        const analysis = await response.json();
+        showAIAnalysis(analysis);
+
+    } catch (error) {
+        aiAnalysisBox.className = "ai-empty-box";
+        aiAnalysisBox.innerHTML = "AI analysis is not available yet.";
+    }
+}
+
+function showAIAnalysis(analysis) {
+    aiAnalysisBox.className = "";
+
+    aiAnalysisBox.innerHTML = `
+        <div class="ai-section-box">
+            <h4>Executive Summary</h4>
+            ${analysis.executive_summary}
+        </div>
+
+        <div class="ai-section-box">
+            <h4>Business Impact</h4>
+            ${analysis.business_impact}
+        </div>
+
+        <div class="ai-section-box">
+            <h4>Technical Analysis</h4>
+            ${analysis.technical_analysis}
+        </div>
+
+        <div class="ai-section-box">
+            <h4>Recommended Response</h4>
+            ${analysis.recommended_response}
+        </div>
+
+        <p><strong>AI Model:</strong> ${analysis.ai_model}</p>
+    `;
+}
+
+if (generateAiBtn) {
+    generateAiBtn.addEventListener("click", async function () {
+        try {
+            generateAiBtn.textContent = "Generating...";
+            generateAiBtn.disabled = true;
+
+            aiAnalysisBox.className = "ai-empty-box";
+            aiAnalysisBox.innerHTML = "Generating AI analysis. This may take a few seconds...";
+
+            const response = await fetch(`${API_BASE_URL_DETAIL}/ai/analyze-threat/${threatId}`, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${detailToken}`
+                }
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                aiAnalysisBox.innerHTML = data.detail || "AI analysis failed.";
+                generateAiBtn.textContent = "Generate AI Explanation";
+                generateAiBtn.disabled = false;
+                return;
+            }
+
+            showAIAnalysis(data.analysis);
+
+            generateAiBtn.textContent = "Regenerate AI Explanation";
+            generateAiBtn.disabled = false;
+
+        } catch (error) {
+            aiAnalysisBox.innerHTML = "Backend or Ollama connection failed.";
+            generateAiBtn.textContent = "Generate AI Explanation";
+            generateAiBtn.disabled = false;
+        }
+    });
+}
+
+loadThreatDetail();
+loadExistingAIAnalysis();
+</script>
+
+</body>
+</html>

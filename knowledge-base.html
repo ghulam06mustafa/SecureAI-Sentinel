@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Knowledge Base | SecureAI Sentinel</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+
+    <style>
+        .kb-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+            margin-bottom: 24px;
+        }
+
+        .kb-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(15,23,42,0.06);
+        }
+
+        .kb-card h3 {
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+
+        .kb-card p {
+            color: #475569;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .kb-tag {
+            display: inline-block;
+            margin-top: 14px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: #eff6ff;
+            color: #1d4ed8;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .kb-section {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 26px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 24px rgba(15,23,42,0.06);
+        }
+
+        .kb-section h2 {
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+
+        .kb-section p {
+            color: #475569;
+            line-height: 1.7;
+            margin-bottom: 14px;
+        }
+
+        .kb-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .kb-table th,
+        .kb-table td {
+            border: 1px solid #e2e8f0;
+            padding: 13px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .kb-table th {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .rag-box {
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+            color: #ffffff;
+            padding: 28px;
+            border-radius: 18px;
+            margin-bottom: 24px;
+        }
+
+        .rag-box h2 {
+            margin-bottom: 10px;
+        }
+
+        .rag-box p {
+            color: #dbeafe;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 1000px) {
+            .kb-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <span>🛡️</span>
+            <span>SecureAI Sentinel</span>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="dashboard.html">📊 Dashboard</a>
+            <a href="upload-logs.html">📤 Upload Logs</a>
+            <a href="threats.html">🚨 Threats</a>
+            <a href="reports.html">📑 Reports</a>
+            <a href="knowledge-base.html" class="active">🧠 Knowledge Base</a>
+            <a href="settings.html">⚙️ Settings</a>
+            <a href="index.html">🌐 Website</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <div class="topbar">
+            <div>
+                <h1>Cyber Knowledge Base</h1>
+                <p>Security knowledge used for threat explanation, response guidance, and future AI RAG.</p>
+            </div>
+
+            <div class="user-box">
+                <div class="user-info">
+                    <strong id="userName">Admin</strong>
+                    <span id="companyName">Organization</span>
+                </div>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+
+        <div class="rag-box">
+            <h2>Future AI RAG Knowledge Engine</h2>
+            <p>
+                This knowledge base will later be connected with LangChain, embeddings, and vector search.
+                When a threat is detected, the AI will retrieve relevant security knowledge and generate
+                better incident explanations, impact analysis, and defensive recommendations.
+            </p>
+        </div>
+
+        <section class="kb-grid">
+
+            <div class="kb-card">
+                <h3>MITRE ATT&CK</h3>
+                <p>
+                    Used to map detected threats with attacker tactics and techniques such as Credential Access,
+                    Initial Access, Exfiltration, and Collection.
+                </p>
+                <span class="kb-tag">Threat Mapping</span>
+            </div>
+
+            <div class="kb-card">
+                <h3>OWASP Security</h3>
+                <p>
+                    Used to understand web application risks such as broken access control, injection,
+                    authentication weaknesses, and sensitive data exposure.
+                </p>
+                <span class="kb-tag">Web Security</span>
+            </div>
+
+            <div class="kb-card">
+                <h3>Incident Response</h3>
+                <p>
+                    Used to guide security teams on containment, investigation, eradication, recovery,
+                    and post-incident improvements.
+                </p>
+                <span class="kb-tag">Response Plan</span>
+            </div>
+
+        </section>
+
+        <section class="kb-section">
+            <h2>Detection Knowledge</h2>
+            <p>
+                SecureAI Sentinel currently detects suspicious behavior from uploaded CSV logs using
+                basic defensive rules. These rules will later be improved using AI and RAG-based context.
+            </p>
+
+            <table class="kb-table">
+                <thead>
+                    <tr>
+                        <th>Threat Type</th>
+                        <th>Detection Logic</th>
+                        <th>Security Meaning</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Brute-force Login Attempt</td>
+                        <td>Many failed login attempts from the same IP</td>
+                        <td>Possible password guessing or credential attack</td>
+                    </tr>
+
+                    <tr>
+                        <td>Suspicious API Access</td>
+                        <td>Repeated 401, 403, or 404 responses on API endpoints</td>
+                        <td>Possible API probing or unauthorized access attempt</td>
+                    </tr>
+
+                    <tr>
+                        <td>Possible Data Exfiltration</td>
+                        <td>Large data download or abnormal bytes sent</td>
+                        <td>Possible unauthorized data transfer</td>
+                    </tr>
+
+                    <tr>
+                        <td>Sensitive Data Exposure</td>
+                        <td>Logs showing debug exposure or sensitive data indicators</td>
+                        <td>Possible leakage of secrets, tokens, or private information</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="kb-section">
+            <h2>MITRE Mapping Examples</h2>
+
+            <table class="kb-table">
+                <thead>
+                    <tr>
+                        <th>Detected Threat</th>
+                        <th>MITRE Tactic</th>
+                        <th>MITRE Technique</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Brute-force Login Attempt</td>
+                        <td>Credential Access</td>
+                        <td>Brute Force</td>
+                    </tr>
+
+                    <tr>
+                        <td>Suspicious API Access</td>
+                        <td>Initial Access</td>
+                        <td>Exploit Public-Facing Application</td>
+                    </tr>
+
+                    <tr>
+                        <td>Possible Data Exfiltration</td>
+                        <td>Exfiltration</td>
+                        <td>Exfiltration Over Web Service</td>
+                    </tr>
+
+                    <tr>
+                        <td>Sensitive Data Exposure</td>
+                        <td>Collection</td>
+                        <td>Data from Information Repositories</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="kb-section">
+            <h2>Recommended Response Playbook</h2>
+
+            <table class="kb-table">
+                <thead>
+                    <tr>
+                        <th>Severity</th>
+                        <th>Action</th>
+                        <th>Priority</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Critical</td>
+                        <td>Block suspicious IP, review accounts, isolate affected systems, escalate immediately</td>
+                        <td>Immediate</td>
+                    </tr>
+
+                    <tr>
+                        <td>High</td>
+                        <td>Investigate source IP, verify user activity, enforce MFA, monitor endpoints</td>
+                        <td>High</td>
+                    </tr>
+
+                    <tr>
+                        <td>Medium</td>
+                        <td>Review logs, validate configuration, improve controls, continue monitoring</td>
+                        <td>Normal</td>
+                    </tr>
+
+                    <tr>
+                        <td>Low</td>
+                        <td>Document finding and observe for repeated activity</td>
+                        <td>Low</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="kb-section">
+            <h2>Next Upgrade</h2>
+            <p>
+                In the next phase, this page will become dynamic. We will store knowledge documents in the backend,
+                create embeddings, save them in a vector database, and allow AI to retrieve relevant security knowledge
+                when explaining threats.
+            </p>
+
+            <p>
+                Planned flow:
+            </p>
+
+            <table class="kb-table">
+                <thead>
+                    <tr>
+                        <th>Step</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Upload Knowledge Files</td>
+                        <td>Add MITRE, OWASP, and incident response notes</td>
+                    </tr>
+
+                    <tr>
+                        <td>Create Embeddings</td>
+                        <td>Convert text knowledge into searchable vectors</td>
+                    </tr>
+
+                    <tr>
+                        <td>Vector Search</td>
+                        <td>Retrieve relevant knowledge for each detected threat</td>
+                    </tr>
+
+                    <tr>
+                        <td>AI Explanation</td>
+                        <td>Generate professional threat explanation using retrieved context</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+</div>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>

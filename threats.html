@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Threats | SecureAI Sentinel</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="sidebar-logo"><span>🛡️</span><span>SecureAI Sentinel</span></div>
+        <nav class="sidebar-menu">
+            <a href="dashboard.html">📊 Dashboard</a>
+            <a href="upload-logs.html">📤 Upload Logs</a>
+            <a href="threats.html" class="active">🚨 Threats</a>
+            <a href="reports.html">📑 Reports</a>
+            <a href="knowledge-base.html">🧠 Knowledge Base</a>
+            <a href="settings.html">⚙️ Settings</a>
+            <a href="index.html">🌐 Website</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="topbar">
+            <div>
+                <h1>Detected Threats</h1>
+                <p>Real threats detected from uploaded logs.</p>
+            </div>
+            <div class="user-box">
+                <div class="user-info">
+                    <strong id="userName">Admin</strong>
+                    <span id="companyName">Organization</span>
+                </div>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+
+        <section class="panel">
+            <div class="panel-header">
+                <h3>Threat Incidents</h3>
+                <a href="upload-logs.html" class="action-link">Upload / Analyze Logs</a>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Threat Type</th>
+                            <th>Source IP</th>
+                            <th>Username</th>
+                            <th>Risk Score</th>
+                            <th>Severity</th>
+                            <th>MITRE Tactic</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="threatTable">
+                        <tr>
+                            <td colspan="7">Loading threats...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="assets/js/app.js"></script>
+<script src="assets/js/threats.js"></script>
+</body>
+</html>
